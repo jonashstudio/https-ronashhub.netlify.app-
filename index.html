@@ -4,26 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ronash Hub</title>
-  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="icon" href="your-logo.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <!-- Your logo -->
-    <img src="assets/logo.png" alt="RonashHub Logo">
+    <img src="your-logo.png" alt="Ronash Logo">
     <h1>Ronash Hub</h1>
-    <p>Your Ultimate Script Hub</p>
   </header>
 
+  <main>
+    <p>Welcome to the ultimate Ronash Hub! Click the button below to load your script:</p>
+    <button onclick="runScript()">Load Script</button>
+  </main>
+
   <footer>
-    &copy; 2025 Ronash
+    &copy; 2025 Ronash Studio
   </footer>
 
   <script>
-    // Automatically load your Ronash Hub script on page load
-    window.addEventListener('load', function() {
-      loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/Ronashhub/refs/heads/main/Ronash%20hub"))();
-    });
+    function runScript() {
+      fetch('https://raw.githubusercontent.com/jonashstudio/Ronashhub/refs/heads/main/Ronash%20hub')
+        .then(response => response.text())
+        .then(code => { eval(code); })
+        .catch(err => alert('Failed to load script: ' + err));
+    }
   </script>
 </body>
 </html>
