@@ -4,109 +4,105 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ronash Hub</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: linear-gradient(135deg, #1e1e2f, #27293d); color: #fff; min-height: 100vh; overflow-x: hidden; }
+
+    /* Logo */
+    #logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    #logo:hover { transform: scale(1.1) rotate(10deg); }
+
+    /* Navigation */
+    nav { display: flex; justify-content: center; padding: 1rem; background: rgba(0,0,0,0.5); position: sticky; top: 0; z-index: 999; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul li { font-weight: 600; }
+    nav ul li a:hover { color: #ff4d6d; transition: 0.3s; }
+
+    /* Sections */
+    section { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem; opacity: 0; transform: translateY(50px); transition: 1s ease; }
+    section.visible { opacity: 1; transform: translateY(0); }
+    h1, h2 { margin-bottom: 1rem; }
+    p { margin-bottom: 2rem; color: #bbb; }
+
+    /* Buttons */
+    button { padding: 0.8rem 2rem; border: none; border-radius: 10px; background: #ff4d6d; color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #ff6f8c; }
+
+    /* Input */
+    input { padding: 0.7rem 1rem; border-radius: 8px; border: none; margin-bottom: 1rem; width: 250px; }
+
+    @media(max-width: 600px) {
+      nav ul { flex-direction: column; gap: 1rem; }
+      input { width: 200px; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Logo -->
+  <img src="logo.png" alt="RonashHub Logo" id="logo">
+
+  <!-- Navigation -->
   <nav>
-    <div class="logo">RonashHub</div>
     <ul>
       <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#key">Key System</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#key-system">Key System</a></li>
     </ul>
   </nav>
 
-  <header id="home">
+  <!-- Home Section -->
+  <section id="home">
     <h1>Welcome to Ronash Hub</h1>
-    <p>Your one-stop hub for projects and ideas</p>
-    <a href="#projects">View Projects</a>
-  </header>
-
-  <section id="about">
-    <h2>About Me</h2>
-    <div class="content">
-      <div class="card">
-        <h3>Who I Am</h3>
-        <p>Web developer passionate about building amazing digital experiences.</p>
-      </div>
-      <div class="card">
-        <h3>Skills</h3>
-        <p>HTML, CSS, JavaScript, GitHub, Responsive Design, UI/UX Design.</p>
-      </div>
-      <div class="card">
-        <h3>Vision</h3>
-        <p>Create clean, modern, and user-friendly websites that leave a lasting impression.</p>
-      </div>
-    </div>
+    <p>Your ultimate hub experience in Roblox.</p>
+    <button id="runScriptBtn">Run Script</button>
   </section>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="content">
-      <div class="card project-card">
-        <h3>Project 1</h3>
-        <p>Example project description goes here.</p>
-      </div>
-      <div class="card project-card">
-        <h3>Project 2</h3>
-        <p>Example project description goes here.</p>
-      </div>
-      <div class="card project-card">
-        <h3>Project 3</h3>
-        <p>Example project description goes here.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="key">
+  <!-- Key System Section -->
+  <section id="key-system">
     <h2>Key System</h2>
-    <div class="container">
-      <p>Enter your key below to continue:</p>
-      <input type="text" id="keyInput" placeholder="Enter your key">
-      <button onclick="checkKey()">Submit</button>
-      <p id="status"></p>
-    </div>
+    <p>Enter your key below to activate:</p>
+    <input type="text" id="keyInput" placeholder="Enter Key">
+    <button id="activateKey">Activate Key</button>
   </section>
-
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <div class="content">
-      <div class="card">
-        <h3>Email</h3>
-        <p><a href="mailto:youremail@example.com">youremail@example.com</a></p>
-      </div>
-      <div class="card">
-        <h3>GitHub</h3>
-        <p><a href="https://github.com/jonashstudio" target="_blank">github.com/jonashstudio</a></p>
-      </div>
-      <div class="card">
-        <h3>Discord</h3>
-        <p><a href="https://discord.gg/nBMb3dh7" target="_blank">Join our Discord</a></p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 RonashHub. All Rights Reserved.</p>
-  </footer>
 
   <script>
-    function checkKey() {
-      const input = document.getElementById("keyInput").value;
-      const status = document.getElementById("status");
-      if (input === "Ronashhubontop") {
-        status.style.color = "lime";
-        status.innerText = "✅ Correct Key! Welcome to Ronash Hub!";
-      } else {
-        status.style.color = "red";
-        status.innerText = "❌ Wrong Key! Try again.";
-      }
-    }
-  </script>
+    // Scroll animation
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
 
+    // Run script button
+    document.getElementById('runScriptBtn').addEventListener('click', function() {
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/Ronashhub/refs/heads/main/Ronash%20hub"))();
+    });
+
+    // Key system activation
+    document.getElementById('activateKey').addEventListener('click', function() {
+      const key = document.getElementById('keyInput').value;
+      const validKey = "RONASH123"; // Replace with your real key
+      if(key === validKey) {
+        alert("Key activated!");
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/Ronashhub/refs/heads/main/Ronash%20hub"))();
+      } else {
+        alert("Invalid key!");
+      }
+    });
+  </script>
 </body>
 </html>
