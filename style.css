@@ -24,14 +24,14 @@ header {
 }
 
 header img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
   transition: transform 0.3s;
 }
 
 header img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 /* Headings */
@@ -63,5 +63,10 @@ footer {
 
   p {
     font-size: 1rem;
+  }
+
+  header img {
+    width: 120px;
+    height: 120px;
   }
 }
