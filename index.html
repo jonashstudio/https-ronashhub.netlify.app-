@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ronash Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav>
+    <div class="logo">RonashHub</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#key">Key System</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header id="home">
+    <h1>Welcome to Ronash Hub</h1>
+    <p>Your one-stop hub for projects and ideas</p>
+    <a href="#projects">View Projects</a>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="content">
+      <div class="card">
+        <h3>Who I Am</h3>
+        <p>Web developer passionate about building amazing digital experiences.</p>
+      </div>
+      <div class="card">
+        <h3>Skills</h3>
+        <p>HTML, CSS, JavaScript, GitHub, Responsive Design, UI/UX Design.</p>
+      </div>
+      <div class="card">
+        <h3>Vision</h3>
+        <p>Create clean, modern, and user-friendly websites that leave a lasting impression.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="content">
+      <div class="card project-card">
+        <h3>Project 1</h3>
+        <p>Example project description goes here.</p>
+      </div>
+      <div class="card project-card">
+        <h3>Project 2</h3>
+        <p>Example project description goes here.</p>
+      </div>
+      <div class="card project-card">
+        <h3>Project 3</h3>
+        <p>Example project description goes here.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="key">
+    <h2>Key System</h2>
+    <div class="container">
+      <p>Enter your key below to continue:</p>
+      <input type="text" id="keyInput" placeholder="Enter your key">
+      <button onclick="checkKey()">Submit</button>
+      <p id="status"></p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <div class="content">
+      <div class="card">
+        <h3>Email</h3>
+        <p><a href="mailto:youremail@example.com">youremail@example.com</a></p>
+      </div>
+      <div class="card">
+        <h3>GitHub</h3>
+        <p><a href="https://github.com/jonashstudio" target="_blank">github.com/jonashstudio</a></p>
+      </div>
+      <div class="card">
+        <h3>Discord</h3>
+        <p><a href="https://discord.gg/nBMb3dh7" target="_blank">Join our Discord</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 RonashHub. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function checkKey() {
+      const input = document.getElementById("keyInput").value;
+      const status = document.getElementById("status");
+      if (input === "Ronashhubontop") {
+        status.style.color = "lime";
+        status.innerText = "✅ Correct Key! Welcome to Ronash Hub!";
+      } else {
+        status.style.color = "red";
+        status.innerText = "❌ Wrong Key! Try again.";
+      }
+    }
+  </script>
+
+</body>
+</html>
