@@ -45,6 +45,7 @@ nav a {
   margin-left: 16px;
   text-decoration: none;
   font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 nav a:hover {
@@ -53,7 +54,7 @@ nav a:hover {
 
 .hero {
   display: grid;
-  gap: 30px;
+  gap: 20px;
   margin-bottom: 40px;
 }
 
@@ -77,10 +78,18 @@ nav a:hover {
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .button:hover {
-  background: #5fb6ff;
+  background: linear-gradient(90deg, #7cd3ff, #5fb6ff);
+  transform: scale(1.05);
+}
+
+.button.copied {
+  transform: scale(1.1);
+  background: linear-gradient(90deg, #7cd3ff, #5fb6ff);
+  transition: all 0.3s ease;
 }
 
 .card {
@@ -125,4 +134,19 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  nav a {
+    margin-left: 10px;
+  }
+
+  .container {
+    padding: 20px;
+  }
 }
