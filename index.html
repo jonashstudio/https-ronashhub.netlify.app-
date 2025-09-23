@@ -1,30 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ronash Hub</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="your-logo.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronash Hub</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Hero Section -->
+<div class="container">
+  <header>
+    <div class="logo"><div>R</div>Ronash</div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#script">Script</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
   <section class="hero">
-    <div class="overlay">
-      <h1>Ronash Hub</h1>
-      <p>Welcome! Load or copy your Roblox hub script below.</p>
-      <div class="buttons">
-        <button onclick="loadScript()">Load Script</button>
-        <button onclick="copyScript()">Copy Script</button>
+    <h1>Ronash Hub</h1>
+    <p>Your mobile-friendly, resizable script hub — ready to use with a single click.</p>
+    <a class="button" href="#script">Get Script</a>
+  </section>
+
+  <section id="features">
+    <div class="features">
+      <div class="feature">
+        <h3>Mobile Ready</h3>
+        <p>Works on all devices. Resizable and touch-friendly UI.</p>
+      </div>
+      <div class="feature">
+        <h3>Script Hub</h3>
+        <p>Organize and run your Roblox scripts easily.</p>
+      </div>
+      <div class="feature">
+        <h3>Fast & Clean</h3>
+        <p>Lightweight website with fast load times and modern style.</p>
       </div>
     </div>
   </section>
 
-  <footer>
-    &copy; 2025 Ronash Studio
-  </footer>
+  <section id="script" class="card" style="margin-top:40px;">
+    <h2>Ronash Script</h2>
+    <p>Copy the script below to your Roblox loader:</p>
+    <pre id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/Ronashhub/refs/heads/main/Ronashv2.lua"))()</pre>
+    <button class="button" id="copyBtn">Copy Script</button>
+    <span id="copyMsg" style="margin-left:10px;color:#7cd3ff;"></span>
+  </section>
 
-  <script src="script.js"></script>
+  <footer id="contact">
+    <p>Made with ❤️ by Ronash. Need help? <a href="mailto:hello@ronash.lol">hello@ronash.lol</a></p>
+  </footer>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
