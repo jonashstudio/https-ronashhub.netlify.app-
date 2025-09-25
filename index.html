@@ -12,8 +12,8 @@
   <header>
     <div class="logo"><div>R</div>Ronash</div>
     <nav>
-      <a href="#features">Features</a>
       <a href="#script">Script</a>
+      <a href="#features">Features</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -23,14 +23,22 @@
     <p>Your mobile-friendly, resizable script hub — ready to use with a single click.</p>
     <a class="button" href="#script">Get Script</a>
 
-    <!-- Optional color picker -->
     <div style="margin:20px 0;">
       <label for="colorPicker" style="color:#99a3b2;">Choose Glow Color: </label>
       <input type="color" id="colorPicker" value="#7cd3ff">
     </div>
   </section>
 
-  <section id="features">
+  <!-- Script Card above features -->
+  <section id="script" class="card" style="margin-top:40px;">
+    <h2>Ronash Script</h2>
+    <p>Copy the script below to your Roblox loader:</p>
+    <pre id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/Ronashhub/refs/heads/main/Ronashv2.lua"))()</pre>
+    <button class="button" id="copyBtn">Copy Script</button>
+    <span id="copyMsg" style="margin-left:10px;color:#7cd3ff;"></span>
+  </section>
+
+  <section id="features" style="margin-top:40px;">
     <div class="features">
       <div class="feature">
         <h3>Mobile Ready</h3>
@@ -45,14 +53,6 @@
         <p>Lightweight website with fast load times and modern style.</p>
       </div>
     </div>
-  </section>
-
-  <section id="script" class="card" style="margin-top:40px;">
-    <h2>Ronash Script</h2>
-    <p>Copy the script below to your Roblox loader:</p>
-    <pre id="scriptCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/Ronashhub/refs/heads/main/Ronashv2.lua"))()</pre>
-    <button class="button" id="copyBtn">Copy Script</button>
-    <span id="copyMsg" style="margin-left:10px;color:#7cd3ff;"></span>
   </section>
 
   <footer id="contact">
