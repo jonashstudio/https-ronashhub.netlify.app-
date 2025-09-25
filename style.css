@@ -7,9 +7,18 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: #0f1724;
+  background: linear-gradient(270deg, #0f1724, #1e293b, #0f1724);
+  background-size: 600% 600%;
   color: #e6eef6;
   line-height: 1.6;
+  animation: gradientBG 15s ease infinite;
+  overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .container {
@@ -63,10 +72,14 @@ nav a:hover {
   background: linear-gradient(90deg, #7cd3ff, #5fb6ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px #7cd3ff, 0 0 20px #5fb6ff;
+  animation: glow 2s ease-in-out infinite alternate;
 }
 
-.hero p {
-  color: #99a3b2;
+@keyframes glow {
+  0% { text-shadow: 0 0 5px #7cd3ff, 0 0 10px #5fb6ff; }
+  50% { text-shadow: 0 0 15px #5fb6ff, 0 0 25px #7cd3ff; }
+  100% { text-shadow: 0 0 10px #7cd3ff, 0 0 20px #5fb6ff; }
 }
 
 .button {
@@ -78,22 +91,28 @@ nav a:hover {
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
+  box-shadow: 0 0 5px #7cd3ff, 0 0 15px #5fb6ff;
   transition: all 0.3s ease;
+  animation: buttonGlow 2s ease-in-out infinite alternate;
 }
 
 .button:hover {
-  background: linear-gradient(90deg, #7cd3ff, #5fb6ff);
   transform: scale(1.05);
+  background: linear-gradient(90deg, #7cd3ff, #5fb6ff);
 }
 
 .button.copied {
   transform: scale(1.1);
-  background: linear-gradient(90deg, #7cd3ff, #5fb6ff);
-  transition: all 0.3s ease;
+}
+
+@keyframes buttonGlow {
+  0% { box-shadow: 0 0 5px #7cd3ff, 0 0 15px #5fb6ff; }
+  50% { box-shadow: 0 0 15px #5fb6ff, 0 0 25px #7cd3ff; }
+  100% { box-shadow: 0 0 10px #7cd3ff, 0 0 20px #5fb6ff; }
 }
 
 .card {
-  background: #0b1220;
+  background: rgba(11,18,32,0.9);
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
@@ -106,7 +125,7 @@ nav a:hover {
 }
 
 .feature {
-  background: #0b1220;
+  background: rgba(11,18,32,0.9);
   padding: 20px;
   border-radius: 12px;
   text-align: center;
@@ -149,4 +168,4 @@ footer a:hover {
   .container {
     padding: 20px;
   }
-}
+  }
