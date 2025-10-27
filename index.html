@@ -1,33 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ronash Hub</title>
 <style>
-  body {
+  :root {
+    --accent: #00bfff;
+  }
+
+  * {
     margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(180deg, #050505, #0d0d0d);
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #080808, #000);
     color: #fff;
-    overflow-x: hidden;
-    text-align: center;
+    scroll-behavior: smooth;
   }
 
-  h1 {
-    font-size: 2.2em;
-    margin-top: 50px;
-    color: var(--accent, #00bfff);
-    text-shadow: 0 0 10px var(--accent, #00bfff);
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 0 20px var(--accent);
   }
 
-  p {
+  header h1 {
+    font-size: 1.5em;
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent);
+  }
+
+  nav a {
     color: #ccc;
-    margin-bottom: 40px;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent);
+  }
+
+  section {
+    padding: 100px 20px 60px;
+    text-align: center;
+    min-height: 100vh;
+  }
+
+  #home h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: var(--accent);
+    text-shadow: 0 0 15px var(--accent);
+  }
+
+  #home p {
+    color: #aaa;
+    margin-bottom: 30px;
   }
 
   button {
-    background: var(--accent, #00bfff);
+    background: var(--accent);
     border: none;
     color: #fff;
     padding: 12px 25px;
@@ -35,18 +81,62 @@
     font-size: 1em;
     cursor: pointer;
     transition: 0.3s;
-    box-shadow: 0 0 15px var(--accent, #00bfff);
+    box-shadow: 0 0 20px var(--accent);
   }
 
   button:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 25px var(--accent, #00bfff);
+    box-shadow: 0 0 30px var(--accent);
   }
 
-  .container {
+  /* Features */
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+  }
+
+  .card {
+    background: rgba(15, 15, 15, 0.9);
+    border-radius: 15px;
+    padding: 25px;
+    width: 280px;
+    box-shadow: 0 0 15px #111;
+    transition: 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+  .card h3 {
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  /* Key System */
+  #key a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  #key a:hover {
+    text-shadow: 0 0 10px var(--accent);
+  }
+
+  /* Footer / Contact */
+  footer {
+    background: #0b0b0b;
     padding: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #888;
   }
 
+  /* Color Picker */
   .color-picker {
     position: fixed;
     bottom: 20px;
@@ -66,16 +156,7 @@
     cursor: pointer;
   }
 
-  @media (max-width: 768px) {
-    h1 {
-      font-size: 1.8em;
-    }
-    button {
-      width: 80%;
-      max-width: 300px;
-    }
-  }
-
+  /* Toast Message */
   .toast {
     position: fixed;
     bottom: 80px;
@@ -86,40 +167,95 @@
     padding: 10px 20px;
     border-radius: 10px;
     display: none;
-    box-shadow: 0 0 10px var(--accent, #00bfff);
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .features {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Ronash Hub</h1>
-    <p>The most advanced, sleek, and fast hub experience.</p>
-    <button id="runScript">Run Script</button>
+<header>
+  <h1>Ronash Hub</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#key">Key System</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="home">
+  <h2>The Most Advanced Hub Experience</h2>
+  <p>Fast, Sleek, and Powerful — built for every platform.</p>
+  <button id="runScript">Run Script</button>
+</section>
+
+<section id="features">
+  <h2>Features</h2>
+  <div class="features">
+    <div class="card">
+      <h3>⚡ Performance</h3>
+      <p>Lightning-fast script execution with optimized performance.</p>
+    </div>
+    <div class="card">
+      <h3>🎨 UI Design</h3>
+      <p>Clean, animated, and fully customizable interface.</p>
+    </div>
+    <div class="card">
+      <h3>🛡️ Security</h3>
+      <p>Protected key system ensures safe access to the hub.</p>
+    </div>
+    <div class="card">
+      <h3>📱 Mobile Ready</h3>
+      <p>Responsive design optimized for all devices.</p>
+    </div>
   </div>
+</section>
 
-  <div class="color-picker">
-    <label for="accentColor">🎨</label>
-    <input type="color" id="accentColor" value="#00bfff" />
-  </div>
+<section id="key">
+  <h2>Key System</h2>
+  <p>To generate your access key, visit the Ronash Key Generator.</p>
+  <a href="https://ronashhubkey.netlify.app" target="_blank">Go to Key Generator →</a>
+</section>
 
-  <div class="toast" id="toast">✅ Script copied to clipboard!</div>
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Join the community and stay updated!</p>
+  <a href="https://discord.gg/mUd5FM3qrF" target="_blank" style="color: var(--accent);">Join Discord</a>
+</section>
 
-  <script>
-    // Script button logic
-    document.getElementById("runScript").addEventListener("click", function () {
-      const script = `loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/RonashHub/refs/heads/main/ronash.lua"))()`;
-      navigator.clipboard.writeText(script);
-      const toast = document.getElementById("toast");
-      toast.style.display = "block";
-      setTimeout(() => (toast.style.display = "none"), 2000);
-    });
+<footer>
+  © 2025 Ronash Hub — All rights reserved.
+</footer>
 
-    // Accent color changer
-    const picker = document.getElementById("accentColor");
-    picker.addEventListener("input", function () {
-      document.documentElement.style.setProperty("--accent", picker.value);
-    });
-  </script>
+<div class="color-picker">
+  <label>🎨</label>
+  <input type="color" id="accentColor" value="#00bfff">
+</div>
+
+<div class="toast" id="toast">✅ Script copied to clipboard!</div>
+
+<script>
+  // Copy script to clipboard
+  document.getElementById("runScript").addEventListener("click", function () {
+    const script = `loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/RonashHub/refs/heads/main/ronash.lua"))()`;
+    navigator.clipboard.writeText(script);
+    const toast = document.getElementById("toast");
+    toast.style.display = "block";
+    setTimeout(() => (toast.style.display = "none"), 2000);
+  });
+
+  // Color theme change
+  const picker = document.getElementById("accentColor");
+  picker.addEventListener("input", function () {
+    document.documentElement.style.setProperty("--accent", picker.value);
+  });
+</script>
 </body>
 </html>
