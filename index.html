@@ -1,261 +1,455 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Ronash Hub</title>
 <style>
-  :root {
+  :root{
     --accent: #00bfff;
+    --accent-2: #00e0ff;
+    --bg-0: #03060a;
+    --bg-1: #071019;
+    --muted: #9fb0bf;
+    --card: rgba(10,14,20,0.7);
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  /* ===== Page reset ===== */
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+  body{
+    background: linear-gradient(180deg,var(--bg-0),var(--bg-1) 60%);
+    color:#e6eef6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-y:auto;
+    scroll-behavior:smooth;
   }
 
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top, #080808, #000);
-    color: #fff;
-    scroll-behavior: smooth;
+  /* ===== Top nav ===== */
+  .nav{
+    position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+    background:linear-gradient(180deg,rgba(2,6,10,0.55),rgba(2,6,10,0.25));
+    border-bottom:1px solid rgba(0,0,0,0.25);backdrop-filter: blur(6px);z-index:120;
+  }
+  .nav .brand{display:flex;align-items:center;gap:12px}
+  .brand img{height:40px;width:40px;object-fit:contain;border-radius:8px;box-shadow:0 6px 24px rgba(0,191,255,0.08)}
+  .brand .title{font-weight:800;color:var(--accent);letter-spacing:1px}
+  .nav .links{display:flex;gap:12px;align-items:center}
+  .nav a{color:#c6d6e0;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:14px}
+  .nav a:hover{color:var(--accent);text-shadow:0 0 12px var(--accent)}
+
+  /* ===== Page layout ===== */
+  main{max-width:1100px;margin:100px auto 80px;padding:24px;display:grid;grid-template-columns:1fr 380px;gap:24px}
+  @media(max-width:980px){main{grid-template-columns:1fr;margin-top:90px;padding:18px}}
+
+  /* ===== Left content ===== */
+  .hero{
+    padding:26px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 12px 40px rgba(2,6,10,0.6);
+    border:1px solid rgba(0,191,255,0.04);
+  }
+  .hero h1{font-size:34px;margin:0;color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text}
+  .hero p.lead{color:var(--muted);margin-top:12px;line-height:1.55}
+  .hero .cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+  .btn{background:var(--accent);color:#001;padding:12px 18px;border-radius:12px;border:none;font-weight:700;cursor:pointer;box-shadow:0 10px 40px rgba(0,191,255,0.12);transition:transform .16s,box-shadow .16s}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);box-shadow:none}
+  .btn:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,191,255,0.18)}
+
+  /* ===== Right card (actions/info) ===== */
+  aside.card{
+    padding:18px;border-radius:12px;background:var(--card);border:1px solid rgba(0,191,255,0.04);
+    position:sticky;top:90px;height:fit-content;
+  }
+  aside .small{font-size:13px;color:var(--muted);margin-bottom:12px}
+
+  /* ===== Supported Executors section ===== */
+  .executors{
+    margin-top:18px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .exe-card{
+    width:96px;height:96px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03);
+    transition:transform .18s,box-shadow .18s;
+    position:relative;overflow:hidden;
+  }
+  .exe-card img{max-width:64px;max-height:48px;object-fit:contain}
+  .exe-card .label{font-size:12px;margin-top:8px;color:var(--muted);font-weight:700}
+  .exe-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,191,255,0.08)}
+  .exe-card .badge{
+    position:absolute;top:8px;left:8px;background:var(--accent);color:#011;padding:4px 6px;border-radius:8px;font-size:10px;font-weight:700;box-shadow:0 6px 20px rgba(0,191,255,0.06)
   }
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0 0 20px var(--accent);
-  }
+  /* fallback text-only badge */
+  .exe-fallback{display:flex;align-items:center;justify-content:center;width:64px;height:40px;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#001;font-weight:800;font-size:13px}
 
-  header h1 {
-    font-size: 1.5em;
-    color: var(--accent);
-    text-shadow: 0 0 10px var(--accent);
+  /* ===== Sections for features, changelog etc. ===== */
+  .section{
+    margin-top:28px;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)
   }
+  .section h3{margin:0;color:var(--accent);font-size:18px}
+  .section p{color:var(--muted);margin-top:8px}
 
-  nav a {
-    color: #ccc;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.3s;
-  }
+  /* ===== Modal (script popup) ===== */
+  .backdrop{position:fixed;inset:0;background:rgba(2,6,10,0.6);display:none;align-items:center;justify-content:center;z-index:999}
+  .backdrop.show{display:flex}
+  .modal{width:94%;max-width:720px;background:linear-gradient(180deg,#071018,#081220);border-radius:12px;padding:18px;border:1px solid rgba(0,191,255,0.06);box-shadow:0 30px 80px rgba(0,0,0,0.7)}
+  pre.script{background:#001018;padding:14px;border-radius:10px;color:#7ff8ff;font-family:ui-monospace, monospace;font-size:13px;overflow:auto;border:1px solid rgba(0,191,255,0.06)}
 
-  nav a:hover {
-    color: var(--accent);
-    text-shadow: 0 0 10px var(--accent);
-  }
+  .modal .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
 
-  section {
-    padding: 100px 20px 60px;
-    text-align: center;
-    min-height: 100vh;
-  }
+  /* ===== Color control UI ===== */
+  .color-controls{display:flex;gap:8px;align-items:center;margin-top:12px}
+  .swatch{width:28px;height:28px;border-radius:8px;cursor:pointer;border:2px solid rgba(255,255,255,0.03)}
+  .picker{width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);padding:4px;background:transparent}
 
-  #home h2 {
-    font-size: 2em;
-    margin-bottom: 10px;
-    color: var(--accent);
-    text-shadow: 0 0 15px var(--accent);
-  }
+  /* ===== Particles (subtle) ===== */
+  .particle {position:fixed;width:6px;height:6px;border-radius:50%;opacity:0.55;pointer-events:none;filter:blur(.6px);z-index:0}
+  @keyframes float {from{transform:translateY(110vh) scale(.6)} to{transform:translateY(-20vh) scale(1)}}
 
-  #home p {
-    color: #aaa;
-    margin-bottom: 30px;
-  }
+  /* ===== Footer ===== */
+  footer{padding:26px;text-align:center;color:var(--muted);font-size:13px;margin-top:36px}
 
-  button {
-    background: var(--accent);
-    border: none;
-    color: #fff;
-    padding: 12px 25px;
-    border-radius: 12px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 0 20px var(--accent);
-  }
-
-  button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px var(--accent);
-  }
-
-  /* Features */
-  .features {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-  }
-
-  .card {
-    background: rgba(15, 15, 15, 0.9);
-    border-radius: 15px;
-    padding: 25px;
-    width: 280px;
-    box-shadow: 0 0 15px #111;
-    transition: 0.3s;
-  }
-
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 25px var(--accent);
-  }
-
-  .card h3 {
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-
-  /* Key System */
-  #key a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  #key a:hover {
-    text-shadow: 0 0 10px var(--accent);
-  }
-
-  /* Footer / Contact */
-  footer {
-    background: #0b0b0b;
-    padding: 20px;
-    text-align: center;
-    font-size: 0.9em;
-    color: #888;
-  }
-
-  /* Color Picker */
-  .color-picker {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #0c0c0c;
-    border: 1px solid #222;
-    border-radius: 12px;
-    padding: 10px 15px;
-    box-shadow: 0 0 10px #000;
-  }
-
-  .color-picker input {
-    border: none;
-    background: none;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-  }
-
-  /* Toast Message */
-  .toast {
-    position: fixed;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(20, 20, 20, 0.9);
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 10px;
-    display: none;
-    box-shadow: 0 0 10px var(--accent);
-  }
-
-  @media (max-width: 768px) {
-    .features {
-      flex-direction: column;
-      align-items: center;
-    }
+  /* mobile tweaks */
+  @media(max-width:720px){
+    .nav .links{display:none}
+    .nav{padding:10px 12px;height:56px}
+    .brand .title{font-size:14px}
+    .exe-card{width:84px;height:84px}
+    .hero h1{font-size:28px}
+    aside.card{position:static;top:auto}
   }
 </style>
 </head>
-
 <body>
-<header>
-  <h1>Ronash Hub</h1>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#features">Features</a>
-    <a href="#key">Key System</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
 
-<section id="home">
-  <h2>The Most Advanced Hub Experience</h2>
-  <p>Fast, Sleek, and Powerful — built for every platform.</p>
-  <button id="runScript">Run Script</button>
-</section>
+  <!-- Top nav -->
+  <div class="nav" role="navigation">
+    <div class="brand">
+      <!-- Put your logo.png file in the same repo folder -->
+      <img src="logo.png" alt="Ronash Hub logo" id="brandLogo" onerror="this.style.display='none'">
+      <div>
+        <div class="title">RONASH HUB</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Script Hub • 2025</div>
+      </div>
+    </div>
 
-<section id="features">
-  <h2>Features</h2>
-  <div class="features">
-    <div class="card">
-      <h3>⚡ Performance</h3>
-      <p>Lightning-fast script execution with optimized performance.</p>
-    </div>
-    <div class="card">
-      <h3>🎨 UI Design</h3>
-      <p>Clean, animated, and fully customizable interface.</p>
-    </div>
-    <div class="card">
-      <h3>🛡️ Security</h3>
-      <p>Protected key system ensures safe access to the hub.</p>
-    </div>
-    <div class="card">
-      <h3>📱 Mobile Ready</h3>
-      <p>Responsive design optimized for all devices.</p>
+    <div class="links" aria-hidden="false">
+      <a href="#home">Home</a>
+      <a href="#executors">Executors</a>
+      <a href="#features">Features</a>
+      <a href="#key">Key</a>
+      <a href="#contact">Contact</a>
     </div>
   </div>
-</section>
 
-<section id="key">
-  <h2>Key System</h2>
-  <p>To generate your access key, visit the Ronash Key Generator.</p>
-  <a href="https://ronashhubkey.netlify.app" target="_blank">Go to Key Generator →</a>
-</section>
+  <!-- floating particles (JS creates them) -->
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p>Join the community and stay updated!</p>
-  <a href="https://discord.gg/mUd5FM3qrF" target="_blank" style="color: var(--accent);">Join Discord</a>
-</section>
+  <main>
+    <!-- left / main content -->
+    <div class="hero" id="home" aria-labelledby="homeTitle">
+      <h1 id="homeTitle">Ronash — Fast. Clean. Neon.</h1>
+      <p class="lead">A modern script hub interface with a clean neon UI, mobile-friendly layout, and integrated key flow. Use the buttons to copy run strings, visit the key system, or download script files.</p>
 
-<footer>
-  © 2025 Ronash Hub — All rights reserved.
-</footer>
+      <div class="cta">
+        <button class="btn" id="openScript">Run Script</button>
+        <button class="btn secondary" id="openKey">Get Key</button>
+      </div>
 
-<div class="color-picker">
-  <label>🎨</label>
-  <input type="color" id="accentColor" value="#00bfff">
-</div>
+      <div class="section" id="executorsSection" style="margin-top:18px">
+        <h3 id="executors">Supported Executors</h3>
+        <p style="margin-top:8px;color:var(--muted)">Common exploit executors supported (logos shown where available).</p>
 
-<div class="toast" id="toast">✅ Script copied to clipboard!</div>
+        <div class="executors" id="executorsGrid" aria-live="polite">
+          <!-- Example list: will try to load images from executors/<name>.png,
+               fallback to text badge if not found -->
+          <!-- You can add images named exactly like data-name attributes below -->
+          <div class="exe-card" data-name="delta">
+            <div class="badge">FULL</div>
+            <img src="executors/delta.png" alt="Delta logo" onerror="this.style.display='none'">
+            <div class="label">Delta</div>
+          </div>
+
+          <div class="exe-card" data-name="vegax">
+            <div class="badge">FULL</div>
+            <img src="executors/vegax.png" alt="Vega X logo" onerror="this.style.display='none'">
+            <div class="label">Vega X</div>
+          </div>
+
+          <div class="exe-card" data-name="arceusx">
+            <div class="badge">FULL</div>
+            <img src="executors/arceusx.png" alt="Arceus X logo" onerror="this.style.display='none'">
+            <div class="label">Arceus X</div>
+          </div>
+
+          <div class="exe-card" data-name="hydrogen">
+            <div class="badge">FULL</div>
+            <img src="executors/hydrogen.png" alt="Hydrogen logo" onerror="this.style.display='none'">
+            <div class="label">Hydrogen</div>
+          </div>
+
+          <div class="exe-card" data-name="evon">
+            <div class="badge">FULL</div>
+            <img src="executors/evon.png" alt="Evon logo" onerror="this.style.display='none'">
+            <div class="label">Evon</div>
+          </div>
+
+          <div class="exe-card" data-name="codex">
+            <div class="badge">FULL</div>
+            <img src="executors/codex.png" alt="Codex logo" onerror="this.style.display='none'">
+            <div class="label">Codex</div>
+          </div>
+
+          <div class="exe-card" data-name="kiwix">
+            <div class="badge">FULL</div>
+            <img src="executors/kiwix.png" alt="Kiwi X logo" onerror="this.style.display='none'">
+            <div class="label">Kiwi X</div>
+          </div>
+
+          <div class="exe-card" data-name="wave">
+            <div class="badge">FULL</div>
+            <img src="executors/wave.png" alt="Wave logo" onerror="this.style.display='none'">
+            <div class="label">Wave</div>
+          </div>
+
+          <div class="exe-card" data-name="fluxus">
+            <div class="badge">FULL</div>
+            <img src="executors/fluxus.png" alt="Fluxus logo" onerror="this.style.display='none'">
+            <div class="label">Fluxus</div>
+          </div>
+
+          <div class="exe-card" data-name="celery">
+            <div class="badge">FULL</div>
+            <img src="executors/celery.png" alt="Celery logo" onerror="this.style.display='none'">
+            <div class="label">Celery</div>
+          </div>
+
+          <div class="exe-card" data-name="others">
+            <div class="badge">FULL</div>
+            <img src="executors/others.png" alt="Other logo" onerror="this.style.display='none'">
+            <div class="label">Others</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="section" id="features" style="margin-top:18px">
+        <h3>What’s inside</h3>
+        <p style="margin-top:6px;color:var(--muted)">Run-ready loader strings, color customization, and a modern UI experience designed for speed and clarity.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+          <div class="card" style="width:220px"><h3 style="margin:0;color:var(--accent)">Fast Loader</h3><p style="color:var(--muted);margin-top:6px">Optimized strings for quick boot.</p></div>
+          <div class="card" style="width:220px"><h3 style="margin:0;color:var(--accent)">Lightweight</h3><p style="color:var(--muted);margin-top:6px">Minimal dependencies — fast on mobile.</p></div>
+          <div class="card" style="width:220px"><h3 style="margin:0;color:var(--accent)">Customizable</h3><p style="color:var(--muted);margin-top:6px">Adjust accent color live.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right / side card -->
+    <aside class="card" aria-label="Actions">
+      <div class="small">Main Actions</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="openScriptSide" class="btn">Show Run String</button>
+        <button id="downloadScript" class="btn secondary">Download</button>
+      </div>
+
+      <div style="margin-top:12px" class="small">Theme</div>
+      <div class="color-controls" role="toolbar" aria-label="Theme colors">
+        <div class="swatch" id="swatchBlue" style="background:linear-gradient(90deg,var(--accent),var(--accent-2))" title="Blue"></div>
+        <div class="swatch" id="swatchPurple" style="background:linear-gradient(90deg,#ff00ff,#ff7bff)" title="Purple"></div>
+        <div class="swatch" id="swatchGreen" style="background:linear-gradient(90deg,#00ff99,#8cffb6)" title="Green"></div>
+        <div class="swatch" id="swatchRed" style="background:linear-gradient(90deg,#ff4444,#ff8a66)" title="Red"></div>
+        <input type="color" id="customColor" class="picker" title="Pick custom color">
+      </div>
+
+      <div style="margin-top:18px">
+        <div class="small">Key System</div>
+        <div style="margin-top:8px">
+          <button id="openKeySide" class="btn secondary">Open Key Generator</button>
+        </div>
+      </div>
+
+      <div style="margin-top:18px">
+        <div class="small">Contact</div>
+        <div style="margin-top:8px">
+          <a href="https://discord.gg/mUd5FM3qrF" target="_blank" class="btn secondary" style="text-decoration:none">Discord</a>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- sections after main -->
+  <div style="max-width:1100px;margin:18px auto;padding:0 18px">
+    <div class="section" id="key">
+      <h3>Key System</h3>
+      <p style="color:var(--muted)">Generate your key on the external key page. Keys grant access for a limited time. <a href="https://jonashstudio.github.io/Key-system/" target="_blank" style="color:var(--accent)">Open Key System</a></p>
+    </div>
+
+    <div class="section" id="contact" style="margin-top:12px">
+      <h3>Contact & Support</h3>
+      <p style="color:var(--muted)">Join our Discord for updates, changelogs, and support.</p>
+    </div>
+  </div>
+
+  <!-- modal for script -->
+  <div id="backdrop" class="backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modTitle">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="modTitle" style="margin:0;color:var(--accent)">Run String</h3>
+        <button id="closeModal" class="btn secondary">Close</button>
+      </div>
+
+      <p style="color:var(--muted);margin-top:10px">Copy the loader string below and paste it into your executor loader field.</p>
+      <pre class="script" id="scriptPre" tabindex="0">loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/RonashHub/refs/heads/main/ronash.lua"))()</pre>
+
+      <div class="row">
+        <button id="copyScriptBtn" class="btn">Copy to clipboard</button>
+        <button id="downloadBtn" class="btn secondary">Download .lua</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 Ronash Hub — <span style="color:var(--muted)">Built with care</span></footer>
 
 <script>
-  // Copy script to clipboard
-  document.getElementById("runScript").addEventListener("click", function () {
-    const script = `loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/RonashHub/refs/heads/main/ronash.lua"))()`;
-    navigator.clipboard.writeText(script);
-    const toast = document.getElementById("toast");
-    toast.style.display = "block";
-    setTimeout(() => (toast.style.display = "none"), 2000);
-  });
+/* ===== Particles ===== */
+(function createParticles(){
+  const count = Math.max(14, Math.floor(window.innerWidth / 80));
+  for (let i=0;i<count;i++){
+    const p = document.createElement('div');
+    p.className='particle';
+    p.style.left = (Math.random()*100) + 'vw';
+    p.style.top = (110 + Math.random()*40) + 'vh';
+    const size = 2 + Math.random()*6;
+    p.style.width = p.style.height = size + 'px';
+    p.style.opacity = (0.15 + Math.random()*0.6).toString();
+    p.style.animationDuration = (8 + Math.random()*8) + 's';
+    p.style.background = ['#00bfff','#ff6bff','#8fffcc'][Math.floor(Math.random()*3)];
+    p.style.zIndex = 0;
+    p.style.animationName = 'float';
+    document.body.appendChild(p);
+  }
+})();
 
-  // Color theme change
-  const picker = document.getElementById("accentColor");
-  picker.addEventListener("input", function () {
-    document.documentElement.style.setProperty("--accent", picker.value);
+/* ===== Modal logic ===== */
+const backdrop = document.getElementById('backdrop');
+const openScript = document.getElementById('openScript');
+const openScriptSide = document.getElementById('openScriptSide');
+const closeModal = document.getElementById('closeModal');
+const copyScriptBtn = document.getElementById('copyScriptBtn');
+const scriptPre = document.getElementById('scriptPre');
+const downloadBtn = document.getElementById('downloadBtn');
+
+function showModal(){
+  backdrop.classList.add('show');
+  backdrop.setAttribute('aria-hidden','false');
+  // focus for accessibility
+  setTimeout(()=> scriptPre.focus(),120);
+}
+function hideModal(){
+  backdrop.classList.remove('show');
+  backdrop.setAttribute('aria-hidden','true');
+}
+
+openScript.addEventListener('click', showModal);
+openScriptSide.addEventListener('click', showModal);
+closeModal.addEventListener('click', hideModal);
+backdrop.addEventListener('click', e => { if (e.target === backdrop) hideModal(); });
+
+/* copy & download */
+copyScriptBtn.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(scriptPre.innerText.trim());
+    copyScriptBtn.textContent = 'Copied ✓';
+    setTimeout(()=> copyScriptBtn.textContent = 'Copy to clipboard', 1600);
+  } catch(e){
+    alert('Copy failed — please manually select the text.');
+  }
+});
+
+downloadBtn.addEventListener('click', () => {
+  const blob = new Blob([scriptPre.innerText + '\n'], {type:'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'ronash_loader.lua';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+});
+
+/* ===== Open key system ===== */
+const openKeyBtns = [document.getElementById('openKey'), document.getElementById('openKeySide')];
+openKeyBtns.forEach(b => {
+  if (!b) return;
+  b.addEventListener('click', () => {
+    window.open('https://jonashstudio.github.io/Key-system/', '_blank', 'noopener');
   });
+});
+
+/* ===== Theme / accent color controls ===== */
+const setAccent = (hex) => {
+  document.documentElement.style.setProperty('--accent', hex);
+  // compute a second accent for gradient (lighter)
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  // lighten
+  const lighten = (v) => Math.min(255, Math.round(v + (255 - v) * 0.35));
+  const hex2 = '#' + [lighten(r), lighten(g), lighten(b)].map(v=>v.toString(16).padStart(2,'0')).join('');
+  document.documentElement.style.setProperty('--accent-2', hex2);
+};
+document.getElementById('swatchBlue').addEventListener('click', ()=> setAccent('#00bfff'));
+document.getElementById('swatchPurple').addEventListener('click', ()=> setAccent('#ff00ff'));
+document.getElementById('swatchGreen').addEventListener('click', ()=> setAccent('#00ff99'));
+document.getElementById('swatchRed').addEventListener('click', ()=> setAccent('#ff4444'));
+document.getElementById('customColor').addEventListener('input', (e)=> setAccent(e.target.value));
+
+// initialize accent from default
+setAccent(getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#00bfff');
+
+/* ===== Executor image fallback: show text badge if image missing ===== */
+(function executorFallback(){
+  document.querySelectorAll('.exe-card').forEach(card=>{
+    const img = card.querySelector('img');
+    if(!img || img.complete === false){
+      // if no image or failed to load, create fallback badge
+      const name = card.querySelector('.label')?.innerText || card.dataset.name || 'Exec';
+      // remove <img> if present
+      if(img) img.remove();
+      const fallback = document.createElement('div');
+      fallback.className = 'exe-fallback';
+      fallback.textContent = name.split(' ')[0].slice(0,3).toUpperCase();
+      card.insertBefore(fallback, card.querySelector('.label'));
+    }
+  });
+})();
+
+/* ===== Smooth reveals on scroll (simple) ===== */
+const revealOnScroll = () => {
+  document.querySelectorAll('.section, .exe-card, .card').forEach(el=>{
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 80){
+      el.style.opacity = 1;
+      el.style.transform = 'none';
+      el.style.transition = 'opacity .6s ease, transform .6s ease';
+    } else {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(18px)';
+    }
+  });
+};
+window.addEventListener('scroll', revealOnScroll, {passive:true});
+window.addEventListener('load', revealOnScroll);
+
+/* ===== Keyboard accessibility for modal ===== */
+window.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    hideModal();
+  }
+});
+
+/* ===== Logo click to scroll top ===== */
+document.getElementById('brandLogo')?.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
 </script>
 </body>
 </html>
