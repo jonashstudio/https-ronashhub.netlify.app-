@@ -3,313 +3,214 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ronash Hub — Run Script</title>
+<title>Ronash Hub</title>
 <style>
-  /* ===== Base ===== */
-  :root{
-    --bg:#07080a;
-    --neon:#00bfff;
-    --neon-2:#00e0ff;
-    --card:#0f1720;
-    --muted:#9aa6b2;
-  }
-  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
-  body{
-    background: linear-gradient(180deg,#05060a 0%, #0a0f18 60%, #05101a 100%);
-    color:#e6eef6;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
-    overflow:hidden;
+  :root {
+    --neon: #00bfff;
+    --bg: #05060a;
+    --card: #0a1018;
+    --text: #e8f2ff;
   }
 
-  /* ===== Particles (background) ===== */
-  .particle{
-    position:fixed;
-    width:6px;height:6px;border-radius:50%;
-    background:var(--neon);
-    opacity:0.45;pointer-events:none;
-    filter:blur(0.3px);
-    animation:float linear infinite;
-  }
-  @keyframes float {
-    from{transform:translateY(110vh) scale(.6); opacity:.25}
-    to{transform:translateY(-10vh) scale(1); opacity:.9}
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Poppins, sans-serif;
+    background: linear-gradient(180deg, #05060a 0%, #0a1018 100%);
+    color: var(--text);
+    overflow-x: hidden;
   }
 
-  /* ===== Page Card ===== */
-  .wrap{
-    width:100%;
-    max-width:980px;
-    padding:36px;
-    display:grid;
-    grid-template-columns: 1fr 420px;
-    gap:26px;
-    align-items:center;
-    z-index:2;
-  }
-  @media (max-width:880px){
-    .wrap{grid-template-columns:1fr; padding:20px; gap:18px;}
+  header {
+    text-align: center;
+    padding: 40px 20px 10px;
   }
 
-  .left{
-    padding:28px;
+  h1 {
+    font-size: 2.2rem;
+    background: linear-gradient(90deg, var(--neon), #ffffff);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px var(--neon);
   }
 
-  .logo{
-    display:flex;align-items:center;gap:14px;margin-bottom:18px;
-  }
-  .logo-badge{
-    background:linear-gradient(135deg,var(--neon),var(--neon-2));
-    color:#011;
-    font-weight:800;
-    padding:10px 14px;border-radius:12px;font-size:20px;box-shadow:0 6px 30px rgba(0,191,255,0.10);
-  }
-  h1{margin:0;font-size:34px;letter-spacing:1px;color:transparent;
-    background:linear-gradient(90deg,var(--neon),var(--neon-2));-webkit-background-clip:text}
-  p.lead{color:var(--muted);margin-top:10px;font-size:15px;max-width:70ch;line-height:1.5;}
-
-  /* ===== Right Card (actions) ===== */
-  .card{
-    background: linear-gradient(180deg, rgba(6,10,16,0.75), rgba(8,12,20,0.6));
-    border:1px solid rgba(0,191,255,0.08);
-    padding:22px;
-    border-radius:14px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 30px rgba(0,191,255,0.03) inset;
+  p {
+    color: #aaa;
+    font-size: 1rem;
   }
 
-  .button{
-    display:inline-block;
-    background:var(--neon);
-    color:#02101a;
-    border:none;
-    padding:14px 24px;
-    border-radius:12px;
-    font-weight:700;
-    cursor:pointer;
-    font-size:15px;
-    box-shadow:0 6px 22px rgba(0,191,255,0.14);
-    transition:transform .16s ease, box-shadow .16s ease;
-  }
-  .button:hover{transform:translateY(-4px); box-shadow:0 18px 48px rgba(0,191,255,0.22)}
-  .button.secondary{background:transparent;color:var(--neon);border:1px solid rgba(0,191,255,0.12); box-shadow:none; padding:10px 16px;}
-
-  /* small helpers */
-  .muted{color:var(--muted);font-size:13px}
-  .features{display:flex;flex-direction:column;gap:10px;margin-top:18px}
-  .feature{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03); display:flex;gap:12px;align-items:center;}
-  .feature .ico{width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,var(--neon),var(--neon-2));display:flex;align-items:center;justify-content:center;color:#001;font-weight:800}
-
-  /* ===== Modal / Script box ===== */
-  .modal-backdrop{
-    position:fixed;inset:0;background:rgba(2,6,10,0.6);backdrop-filter: blur(6px);display:flex;align-items:center;justify-content:center;z-index:40;opacity:0;pointer-events:none;transition:opacity .18s ease;
-  }
-  .modal-backdrop.show{opacity:1;pointer-events:auto;}
-  .modal{
-    width:92%;max-width:720px;background:linear-gradient(180deg,#07101a,#0b1420);border-radius:14px;padding:18px;border:1px solid rgba(0,191,255,0.09);box-shadow:0 20px 60px rgba(0,0,0,0.6);
-    transform:translateY(8px) scale(.98);transition:transform .18s ease,opacity .18s ease;
-  }
-  .modal.show{transform:none}
-  .modal-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .modal-header h3{margin:0;color:var(--neon)}
-  .close-btn{background:#ff4b5c;color:white;border:none;padding:8px 12px;border-radius:10px;cursor:pointer}
-
-  pre.script {
-    margin:14px 0 6px 0;
-    background:#001018;
-    border-radius:10px;
-    padding:14px;
-    color:#7ff8ff;
-    font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
-    font-size:13px;
-    overflow:auto;
-    border:1px solid rgba(0,191,255,0.06);
+  main {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
   }
 
-  .modal-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:8px}
-  .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:8px 12px;border-radius:8px}
+  .button {
+    display: inline-block;
+    background: var(--neon);
+    color: #000;
+    padding: 14px 26px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--neon);
+    transition: 0.3s ease;
+  }
 
-  /* small footer */
-  footer.small{position:fixed;left:14px;bottom:10px;color:var(--muted);font-size:12px;z-index:20}
+  .button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px var(--neon);
+  }
 
-  /* accessibility focus */
-  .button:focus, .close-btn:focus, .ghost:focus{outline:2px solid rgba(0,191,255,0.12); outline-offset:3px}
+  .script-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(10, 15, 25, 0.95);
+    border: 2px solid var(--neon);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 0 25px var(--neon);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .script-box.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  pre {
+    background: #000;
+    padding: 10px;
+    color: var(--neon);
+    border-radius: 8px;
+    font-size: 13px;
+    user-select: all;
+  }
+
+  /* Floating color changer */
+  .color-changer {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--neon);
+    border-radius: 50%;
+    padding: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--neon);
+    z-index: 100;
+    transition: 0.3s ease;
+  }
+
+  .palette {
+    position: fixed;
+    bottom: 80px;
+    right: 25px;
+    background: rgba(15, 20, 30, 0.95);
+    border: 1px solid var(--neon);
+    padding: 10px;
+    border-radius: 12px;
+    display: none;
+    gap: 8px;
+  }
+
+  .palette.show {
+    display: flex;
+  }
+
+  .color-option {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff;
+  }
+
+  @media (max-width: 600px) {
+    main {
+      padding: 10px;
+    }
+    .button {
+      width: 100%;
+    }
+  }
 </style>
 </head>
 <body>
 
-  <!-- floating particles generated by JS -->
-  <!-- page content -->
-  <main class="wrap" role="main">
-    <section class="left">
-      <div class="logo">
-        <div class="logo-badge">R</div>
-        <div>
-          <div style="font-weight:800;color:var(--neon);font-size:14px;">RONASH</div>
-          <div style="color:var(--muted);font-size:12px;margin-top:4px;">Script Hub • Neon loader</div>
-        </div>
-      </div>
+<header>
+  <h1>Ronash Hub</h1>
+  <p>The most advanced, sleek, and fast hub experience.</p>
+</header>
 
-      <h1>Fast, Clean, Ronix-style Hub</h1>
-      <p class="lead">Ronash Hub is an elegant script hub interface for sharing loader links and scripts. Click the big button to open the script modal — users can copy the Run string safely from the site.</p>
+<main>
+  <button id="openScript" class="button">Run Script</button>
 
-      <div class="features" aria-hidden="false">
-        <div class="feature"><div class="ico">⚡</div> <div><strong>Fast Loader</strong><div class="muted">Lightweight & quick</div></div></div>
-        <div class="feature"><div class="ico">🛡️</div> <div><strong>Secure UI</strong><div class="muted">Only shows script text (doesn't execute)</div></div></div>
-        <div class="feature"><div class="ico">🎨</div> <div><strong>Neon Design</strong><div class="muted">Animated, responsive, and modern</div></div></div>
-      </div>
-    </section>
-
-    <aside class="card" aria-labelledby="actions">
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div style="font-size:14px;color:var(--muted)">Main Action</div>
-            <div style="font-weight:800;color:var(--neon);margin-top:4px">Run script / Copy</div>
-          </div>
-          <div style="text-align:right;color:var(--muted)">v2025.10</div>
-        </div>
-
-        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <button id="openScriptBtn" class="button" aria-haspopup="dialog" aria-controls="scriptModal">Run Script</button>
-          <button id="downloadBtn" class="button secondary">Download</button>
-        </div>
-
-        <div style="margin-top:8px;color:var(--muted);font-size:13px">Want to join our community? <a href="https://discord.gg/mUd5FM3qrF" target="_blank" style="color:var(--neon)">Join Discord</a></div>
-      </div>
-    </aside>
-  </main>
-
-  <footer class="small">© 2025 Ronash Hub</footer>
-
-  <!-- Modal (hidden by default) -->
-  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-    <div id="scriptModal" class="modal" role="document" aria-labelledby="modalTitle">
-      <div class="modal-header">
-        <h3 id="modalTitle">Copy Run Script</h3>
-        <button id="closeModalBtn" class="close-btn" aria-label="Close">Close</button>
-      </div>
-
-      <p class="muted" style="margin-top:8px">Copy the loader string below — this page will not execute the script automatically.</p>
-
-      <pre class="script" id="scriptText" tabindex="0">loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/RonashHub/refs/heads/main/ronash.lua"))()</pre>
-
-      <div class="modal-actions">
-        <button id="copyScriptBtn" class="button">Copy Script</button>
-        <button id="close2Btn" class="ghost">Close</button>
-      </div>
-    </div>
+  <div id="scriptBox" class="script-box">
+    <h3>Copy Script</h3>
+    <pre id="scriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/jonashstudio/RonashHub/refs/heads/main/ronash.lua"))()</pre>
+    <button id="copyBtn" class="button">Copy</button>
   </div>
+</main>
+
+<!-- Floating color changer -->
+<div class="color-changer" id="colorChanger">🎨</div>
+<div class="palette" id="palette">
+  <div class="color-option" data-color="#00bfff" style="background:#00bfff"></div>
+  <div class="color-option" data-color="#ff00ff" style="background:#ff00ff"></div>
+  <div class="color-option" data-color="#00ff99" style="background:#00ff99"></div>
+  <div class="color-option" data-color="#ff4444" style="background:#ff4444"></div>
+  <div class="color-option" data-color="#ffff33" style="background:#ffff33"></div>
+</div>
 
 <script>
-/* ===== Particles ===== */
-(function createParticles(){
-  const count = Math.max(18, Math.floor(window.innerWidth / 60));
-  for(let i=0;i<count;i++){
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const left = Math.random()*100;
-    p.style.left = left + 'vw';
-    p.style.top = (Math.random()*120 + 60) + 'vh'; // start below so it floats upward
-    p.style.width = p.style.height = (2 + Math.random()*6) + 'px';
-    p.style.opacity = (0.2 + Math.random()*0.6).toString();
-    p.style.animationDuration = (6 + Math.random()*6) + 's';
-    p.style.background = `linear-gradient(180deg, ${['#00bfff','#00e0ff','#7ce0ff'][Math.floor(Math.random()*3)]} 0%, rgba(0,191,255,0.2) 100%)`;
-    document.body.appendChild(p);
-  }
-})();
+  const openBtn = document.getElementById("openScript");
+  const box = document.getElementById("scriptBox");
+  const copyBtn = document.getElementById("copyBtn");
+  const scriptText = document.getElementById("scriptText").innerText;
 
-/* ===== Modal logic & accessibility ===== */
-const openBtn = document.getElementById('openScriptBtn');
-const modalBackdrop = document.getElementById('modalBackdrop');
-const scriptModal = document.getElementById('scriptModal');
-const closeModalBtn = document.getElementById('closeModalBtn');
-const close2Btn = document.getElementById('close2Btn');
-const copyScriptBtn = document.getElementById('copyScriptBtn');
-const scriptTextEl = document.getElementById('scriptText');
+  openBtn.addEventListener("click", () => {
+    box.classList.add("show");
+  });
 
-function showModal(){
-  modalBackdrop.classList.add('show');
-  modalBackdrop.setAttribute('aria-hidden','false');
-  scriptModal.classList.add('show');
-  // focus the pre for keyboard users
-  setTimeout(()=> scriptTextEl.focus(), 90);
-  // trap focus (basic)
-  document.addEventListener('focus', trapFocus, true);
-  document.addEventListener('keydown', onKeyDown);
-}
-function hideModal(){
-  modalBackdrop.classList.remove('show');
-  modalBackdrop.setAttribute('aria-hidden','true');
-  scriptModal.classList.remove('show');
-  document.removeEventListener('focus', trapFocus, true);
-  document.removeEventListener('keydown', onKeyDown);
-  openBtn.focus();
-}
+  copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(scriptText);
+    copyBtn.innerText = "Copied!";
+    setTimeout(() => (copyBtn.innerText = "Copy"), 1500);
+  });
 
-function trapFocus(e){
-  if(!scriptModal.contains(e.target)){
-    e.stopPropagation();
-    scriptModal.focus();
-  }
-}
-function onKeyDown(e){
-  if(e.key === 'Escape') hideModal();
-}
+  document.addEventListener("click", (e) => {
+    if (!box.contains(e.target) && !openBtn.contains(e.target)) {
+      box.classList.remove("show");
+    }
+  });
 
-// open
-openBtn.addEventListener('click', () => {
-  showModal();
-});
+  // === Color changer ===
+  const changer = document.getElementById("colorChanger");
+  const palette = document.getElementById("palette");
+  const options = document.querySelectorAll(".color-option");
 
-// close buttons
-closeModalBtn.addEventListener('click', hideModal);
-close2Btn.addEventListener('click', hideModal);
+  changer.addEventListener("click", () => {
+    palette.classList.toggle("show");
+  });
 
-// clicking backdrop outside modal closes
-modalBackdrop.addEventListener('click', (ev) => {
-  if(ev.target === modalBackdrop) hideModal();
-});
-
-/* ===== Copy script functionality ===== */
-const SCRIPT_TEXT = scriptTextEl.innerText.trim();
-
-copyScriptBtn.addEventListener('click', async () => {
-  try{
-    await navigator.clipboard.writeText(SCRIPT_TEXT);
-    copyScriptBtn.textContent = 'Copied ✓';
-    setTimeout(()=> copyScriptBtn.textContent = 'Copy Script', 1400);
-  }catch(e){
-    alert('Copy failed. You can manually select the script and copy it.');
-  }
-});
-
-/* ===== Download button (example) ===== */
-document.getElementById('downloadBtn').addEventListener('click', () => {
-  // create a blob containing the script text and trigger download
-  const blob = new Blob([SCRIPT_TEXT + '\n'], {type:'text/plain;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'ronash_run_string.txt';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-});
-
-/* Prevent accidental selection scroll */
-scriptTextEl.addEventListener('click', () => {
-  // select text on click for convenience
-  if(document.createRange && window.getSelection){
-    const range = document.createRange();
-    range.selectNodeContents(scriptTextEl);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-  }
-});
+  options.forEach(opt => {
+    opt.addEventListener("click", () => {
+      const color = opt.getAttribute("data-color");
+      document.documentElement.style.setProperty("--neon", color);
+      palette.classList.remove("show");
+    });
+  });
 </script>
+
 </body>
 </html>
